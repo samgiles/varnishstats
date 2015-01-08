@@ -1,5 +1,5 @@
 {
-  "name": "varnish-stats",
+  "name": "varnishstats",
   "version": "1.0.0",
   "description": "Get a real time stream of request response statistics from a locally running varnish server using varnishncsa",
   "main": "index.js",

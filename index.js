@@ -21,7 +21,7 @@ function VarnishStats(varnishncsaProcess) {
 			return;
 		}
 
-		stats.emit('data', parsedData);
+		stats.emit('request', parsedData);
 	}
 
 	this.varnishncsa.stdout.on('data', _onVarnishncsaData);

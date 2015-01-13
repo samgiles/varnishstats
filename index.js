@@ -41,7 +41,8 @@ function varnishncsaOutputParser(dataString) {
 		"time": parseInt(splitString[0], 10),
 		"bytes": parseInt(splitString[1], 10),
 		"status": parseInt(splitString[2], 10),
-		"request": splitString[3]
+		"request": splitString[3],
+		"hitmiss": splitString[4]
 	};
 }
 
@@ -52,7 +53,8 @@ module.exports = function() {
 	// %b - Response bytes
 	// %s - Response status
 	// %r - Original request
-	var _varnishncsaFormat = '%D ! %b ! %s ! %r';
+	// %{Varnish:hitmiss}x  - Varnish 'hit' or 'miss'
+	var _varnishncsaFormat = '%D ! %b ! %s ! %r ! %{Varnish:hitmiss}x;
     var varnishncsa = spawn("varnishncsa", ['-F', _varnishncsaFormat]);
 	return new VarnishStats(varnishncsa);
 };

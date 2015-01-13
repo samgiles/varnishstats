@@ -54,7 +54,7 @@ module.exports = function() {
 	// %s - Response status
 	// %r - Original request
 	// %{Varnish:hitmiss}x  - Varnish 'hit' or 'miss'
-	var _varnishncsaFormat = '%D ! %b ! %s ! %r ! %{Varnish:hitmiss}x;
+	var _varnishncsaFormat = '%D ! %b ! %s ! %r ! %{Varnish:hitmiss}x';
     var varnishncsa = spawn("varnishncsa", ['-F', _varnishncsaFormat]);
 	return new VarnishStats(varnishncsa);
 };

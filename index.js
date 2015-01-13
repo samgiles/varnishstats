@@ -7,7 +7,7 @@ function VarnishStats(varnishncsaProcess) {
 	var stats = this;
 
     function _onVarnishncsaData(data) {
-		var parsedData = JSON.parse(data);
+		var parsedData = varnishncsaOutputParser(data);
 		var requestTopLine = parsedData.request.split(/\s/);
 		parsedData.method = requestTopLine[0];
 		parsedData.requestUrl = requestTopLine[1];
@@ -35,6 +35,16 @@ function VarnishStats(varnishncsaProcess) {
 
 inherits(VarnishStats, EventEmitter);
 
+function varnishncsaOutputParser(dataString) {
+	var splitString = dataString.toString().split(' ! ');
+	return {
+		"time": parseInt(splitString[0], 10),
+		"bytes": parseInt(splitString[1], 10),
+		"status": parseInt(splitString[2], 10),
+		"request": splitString[3]
+	};
+}
+
 module.exports = function() {
 
 	// Format as JSON
@@ -42,7 +52,7 @@ module.exports = function() {
 	// %b - Response bytes
 	// %s - Response status
 	// %r - Original request
-	var _varnishncsaFormat = '{"time": %D, "bytes": %b, "status": %s, "request": "%r" }';
+	var _varnishncsaFormat = '%D ! %b ! %s ! %r';
     var varnishncsa = spawn("varnishncsa", ['-F', _varnishncsaFormat]);
 	return new VarnishStats(varnishncsa);
 };

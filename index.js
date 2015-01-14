@@ -36,7 +36,11 @@ function VarnishStats(varnishncsaProcess) {
 inherits(VarnishStats, EventEmitter);
 
 function varnishncsaOutputParser(dataString) {
-	var splitString = dataString.toString().split(' ! ');
+	// Strip out newlines
+	var splitString = dataString.toString().split(' ! ').map(function cleanStrings(string) {
+		return string.replace('\n', '');
+	});
+
 	return {
 		"time": parseInt(splitString[0], 10),
 		"bytes": parseInt(splitString[1], 10),

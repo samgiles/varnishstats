@@ -28,7 +28,7 @@ function VarnishStats(varnishncsaProcess) {
 
 	this.varnishncsa.on('close', function (code) {
 		this.emit('close', code);
-	});
+	}.bind(this));
 
 	// TODO: Do something with stderr
 }
